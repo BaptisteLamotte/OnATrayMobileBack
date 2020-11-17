@@ -196,4 +196,13 @@ router.get('/profil/:token', async function( req, res, next){
   res.json(user)
 })
 
+router.post('/getMyAdress', async function(req,res,next){
+  var talentToCheck = await talentModel.findOne({token:req.body.token})
+
+  var adress ={long : talentToCheck.adresselgtlat.coordinates[0], lat : talentToCheck.adresselgtlat.coordinates[1] }
+  res.json(adress)
+
+})
+
+
 module.exports = router;

@@ -29,7 +29,7 @@ function MessageCourt(props){
         return(
             <Redirect to={`messageRoom?name=${props.myToken}&desti=${props.tokenDesti}&room=${props.roomName}`}/>
 
-           )
+        )
     }else {
 
     

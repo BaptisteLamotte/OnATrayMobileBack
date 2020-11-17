@@ -64,7 +64,7 @@ router.get('/getinformation', async function(req,res,next){
 router.post('/recherche-liste-talents',async function(req,res,next){
 var données= JSON.parse(req.body.criteres)
 var restaurant = await restaurantModel.findOne({token:req.body.token})
-var jobminuscule=données.posterecherché.toLowerCase()
+var jobminuscule=données.posterecherché
 
 var typedecontrat=données.typedecontrat
 
@@ -83,24 +83,26 @@ if (jobminuscule== 'tous les postes'){
     }else{
     var responseAenvoyer=await talentModel.find({lookingJob:{$in:jobminuscule }}).populate('formation').populate('experience').exec()
   }}
-        else
-        {   var responseAenvoyer = await talentModel.find({
+    else{  
+      console.log('je suis censé passé par la ')
+           var responseAenvoyer = await talentModel.find({
             lookingJob:{$in:jobminuscule},
             typeofContract:{$in:typedecontrat},
-            polygone: {
-              $geoIntersects: {
-                $geometry: {
-                    type: "Point" ,
-                    coordinates: restaurant.adresselgtlat.coordinates,
-                }
-              }
-            }
+            // polygone: {
+            //   $geoIntersects: {
+            //     $geometry: {
+            //         type: "Point" ,
+            //         coordinates: restaurant.adresselgtlat.coordinates,
+            //     }
+            //   }
+            // }
           }).populate('formation').populate('experience').exec()
-          console.log(('chargement avec tri',responseAenvoyer))
+          console.log('response', responseAenvoyer)
         }
-let restaurantwishlistexpand = await restaurantModel.findOne({token:req.body.token}).populate('wishlistRestaurant').exec()
-let restaurantwishlistid = await restaurantModel.findOne({token:req.body.token})
-
+        let restaurantwishlistexpand = await restaurantModel.findOne({token:req.body.token}).populate('wishlistRestaurant').exec()
+        let restaurantwishlistid = await restaurantModel.findOne({token:req.body.token})
+        
+       
 
   res.json({liste:responseAenvoyer,restaurantwishlist:restaurantwishlistexpand,restaurantwishlistid:restaurantwishlistid.wishlistRestaurant})
  })

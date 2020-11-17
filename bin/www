@@ -27,19 +27,22 @@ var chatRoomModel = require('../model/chatRoom')
 var talentModel = require('../model/talents')
 var restaurantModel = require('../model/restaurants')
 var io = require('socket.io')(server); 
+
 io.on('connection', async function(socket){
   console.log('user has join')
 
   socket.on('join', ({name, room}, )=>{
+    console.log('name', name)
+    console.log('room', room)
     var user = {id: socket.id, name , room}
-    console.log(user.name, user.room)
+    console.log('user.name uer.room',user.name, user.room)
     socket.join(user.room)
   }) 
 
-  socket.on('sendMessage', async (message, )=>{
+  socket.on('sendMessage', async (message )=>{
     
 
-    
+    console.log('je passe ici')
     
     var roomId = message.room
     var chatRoomToFind = await chatRoomModel.findById(roomId)
@@ -50,10 +53,10 @@ io.on('connection', async function(socket){
     
     if(expeToCheck){
        expediteur = expeToCheck.firstName
-       console.log('je passe ici')
+       
     }
     else{
-      console.log("je passe la ")
+     
       expeToCheckk = await restaurantModel.findOne({token:message.name})
       console.log('expetocheck',expeToCheckk)
      expediteur = expeToCheckk.name
@@ -79,7 +82,7 @@ io.on('connection', async function(socket){
   })
 
 
-  socket.on('disconnect', ()=>{
+  socket.on('disco', ()=>{
     console.log('user had left')
   })
      

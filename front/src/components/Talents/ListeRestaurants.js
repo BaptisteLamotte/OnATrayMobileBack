@@ -40,8 +40,8 @@ function ListeRestaurants(props){
     const [prixCoche, setPrixcoche] = useState(listePrix)
     const [typeCuisinecochee, setTypeCuisinecochee] = useState(listeCuisines)
     const [typeRestaurantcochee, setTypeRestaurantcochee] = useState(listeTypes)
-    const[restoAAfficher, setRestoAAfficher] = useState({})
-    const[visible, setVisible] = useState(false)
+    const [restoAAfficher, setRestoAAfficher] = useState({})
+    const [visible, setVisible] = useState(false)
     const latlngDomicile = [props.adresseToDisplay.coordinates[1], props.adresseToDisplay.coordinates[0]]
 
     const [isSignIn, setIsSignIn] = useState(props.connectToDisplay.isSignIn)

@@ -109,6 +109,7 @@ router.post('/getOldMessage',async function(req,res,next){
     let chatRoomId = req.body.chatRoomId
     var chatRoomToFind = await chatRoomModel.findById(chatRoomId)
     if(chatRoomToFind){
+      console.log('chatroomtofind',chatRoomToFind.expediteurName)
       res.json({result : chatRoomToFind.message, restau : chatRoomToFind.expediteurName, talent : chatRoomToFind.destinataireName, card: talentToFind})
     } else {
       res.json({result : 'no old messages', restau : chatRoomToFind.expediteurName, talent : chatRoomToFind.destinataireName, card: talentToFind})

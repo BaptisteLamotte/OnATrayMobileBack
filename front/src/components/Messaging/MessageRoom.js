@@ -19,6 +19,7 @@ const {TextArea} = Input;
 const { Meta } = Card;
 
 const socket = socketIOClient("http://localhost:3000");
+//const socket = socketIOClient('https://172.17.1.141:3000')
 
 function MessageRoom({location, connectToDisplay, tokenToDisplay}){
     const [myToken, setMyToken] = useState('')
@@ -60,7 +61,8 @@ function MessageRoom({location, connectToDisplay, tokenToDisplay}){
 
       useEffect(()=>{
         const {name, desti , room} = queryString.parse(location.search)
-       
+       console.log(queryString.parse(location.search))
+        var namee = name 
         chatRoomId = room
         setchatroom(room)
         setSender(name)
@@ -68,7 +70,7 @@ function MessageRoom({location, connectToDisplay, tokenToDisplay}){
         setMyToken(name)
         tokenDesti = desti
 
-        socket.emit('join', {name, room}, ({})=>{
+        socket.emit('join', {name : namee, room: room}, ({})=>{
             
         })
         
@@ -95,7 +97,7 @@ function MessageRoom({location, connectToDisplay, tokenToDisplay}){
             })
             
             let response = await rawResponse.json()
-            console.log('reponse.result',response.result)
+           // console.log('reponse.result',response.result)
             
             var messageTab = response.result
             var tempMessageTab = []
@@ -128,7 +130,7 @@ function MessageRoom({location, connectToDisplay, tokenToDisplay}){
                     setIsLookingFor("ne recherche pas d'emploi pour le moment")
                 }  
             }else if (isTalent){
-                console.log(response.card)
+               // console.log(response.card)
                 setAvatar(response.card.photo)
                 setRestauName(response.card.name)
 
@@ -144,10 +146,10 @@ function MessageRoom({location, connectToDisplay, tokenToDisplay}){
 
                 var tempTabb = []
                 for(let i=0;i<response.card.typeOfFood.length;i++){
-                    console.log(response.card.typeOfFood[i])
+                   // console.log(response.card.typeOfFood[i])
                     tempTabb.push(<li>- {response.card.typeOfFood[i]}</li>)
             }
-                console.log(tempTabb)
+               // console.log(tempTabb)
                  setFood(tempTabb)
             }
 
